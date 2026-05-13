@@ -8,7 +8,11 @@ const server = express();
 const mongoose = require("mongoose");
 
 // ? Récupération des variables d'environnement :
-const { PORT, DB_CONNECTION } = process.env;
+// On récupère DB_CONNECTION
+const { DB_CONNECTION } = process.env;
+
+// On récupère le PORT fourni par Render, ou on utilise 3000 par défaut (pour ton PC local)
+const PORT = process.env.PORT || 3000;
 
 // ? 2) Configuration des middlewares globaux d'Express
 // ? Pour que l'API comprenne quand du JSON arrive dans le body de la requête
