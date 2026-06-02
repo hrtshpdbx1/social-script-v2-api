@@ -140,7 +140,7 @@ const adminController = {
             if (!scenario) {
                 return next(errorUtils.notFound('Ce scénario n\'existe pas'))
             }
-            const editedScenario = await scenarioService.edit(scenarioId, newScenarioContent, adminId);
+            const editedScenario = await scenarioService.edit(scenarioId, newScenarioContent);
             res.status(200).json(editedScenario);
 
         } catch (err) {

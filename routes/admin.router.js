@@ -1,6 +1,7 @@
 const adminController = require('../controllers/admin.controller');
 const scenarioController = require('../controllers/scenario.controller');
 const themeController = require('../controllers/theme.controller');
+const resourceController = require('../controllers/resource.controller');
 // Après
 const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
@@ -36,6 +37,9 @@ adminRouter.route('/themes')
 
 adminRouter.route('/themes/:themeId/status')
 .patch(adminController.updateThemeStatus)
+
+adminRouter.route('/resources')
+    .get(resourceController.getAllResourcesAdmin);
 
 adminRouter.route('/users')
 .get(requireRole('admin'), adminController.getAllUsers)

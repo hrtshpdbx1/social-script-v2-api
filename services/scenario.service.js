@@ -57,7 +57,7 @@ const scenarioService = {
         }
     },
 
-    update: async (scenarioId, newScenarioStatus, adminId) => {
+    update: async (scenarioId, newScenarioStatus,) => {
         try {
             const statusToUpdate = await Scenario.findByIdAndUpdate(scenarioId,
                 {

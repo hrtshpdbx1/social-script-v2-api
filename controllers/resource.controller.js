@@ -49,6 +49,20 @@ const resourceController = {
         }
     },
 
+    
+      /**
+     * GET ALL ADMIN 
+     * Acces a toute les ressources y comprends pending
+     */
+    getAllResourcesAdmin: async (req, res, next) => {
+    try {
+        const resources = await resourceService.findAll(true);
+        return res.status(200).json({ resources });
+    } catch (err) {
+        next(err);
+    }
+},
+
     /**
      * 
      * POST /resources
@@ -100,7 +114,8 @@ const resourceController = {
         } catch (err) {
             next(err);
         }
-    }
+    }, 
+
 };
 
 module.exports = resourceController;

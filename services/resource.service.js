@@ -2,9 +2,12 @@ const Resource = require('../models/ressource.model');
 
 const resourceService = {
  // Trouver toutes les ressources publiées
-findAll: async () => {
+// includeUnpublished : true pour l'admin (tout voir), false pour le public
+findAll: async (includeUnpublished = false) => {
     try {
-        return await Resource.find({ isPublished: true });
+        const filter = includeUnpublished ? {} : { isPublished: true };
+        // {} comme filtre veut dire "aucune condition", donc tout.
+        return await Resource.find(filter).populate('categoryId');
     } catch (err) {
         console.log(err);
         throw err;
