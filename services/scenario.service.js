@@ -27,14 +27,14 @@ const scenarioService = {
     findById: async (id) => {
         try {
             // On utilise findOne pour pouvoir combiner l'ID et notre condition de soft delete
-            const scenario = await Scenario.findOne({ 
-                _id: id, 
-                deletedAt: null 
+            const scenario = await Scenario.findOne({
+                _id: id,
+                deletedAt: null
             });
             return scenario;
         } catch (err) {
             console.log(err);
-            throw err; 
+            throw err;
         }
     },
 
@@ -76,16 +76,33 @@ const scenarioService = {
 
     },
 
+    edit: async (scenarioId, newScenarioContent) => {
+        try {
+            const contentToUpdate = await Scenario.findByIdAndUpdate(scenarioId,
+                {
+                    ...newScenarioContent,
+                },
+                { returnDocument: 'after' }
+            );
+            return contentToUpdate
+        }
+        catch (err) {
+            console.log(err);
+            throw new Error(err);
+        }
+    },
+
+
     delete: async (id) => {
         try {
             // On cherche l'ID ET on s'assure qu'il n'est pas déjà supprimé
             const deletedScenario = await Scenario.findOneAndUpdate(
                 { _id: id, deletedAt: null }, // Le filtre strict
                 { deletedAt: new Date() },
-                { returnDocument: 'after' } 
+                { returnDocument: 'after' }
             );
             return deletedScenario;
-            
+
         } catch (err) {
             console.log(err);
             throw err;

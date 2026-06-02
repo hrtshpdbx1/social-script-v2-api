@@ -75,6 +75,7 @@ const adminController = {
         }
     },
 
+
     /**
      * Liste les scénarios en attente de validation. 
     * @param { Request } req
@@ -122,6 +123,32 @@ const adminController = {
         }
 
     },
+
+    /**
+  * Modifie le contenu d'un scenario 
+  * 
+ * @param { Request } req
+ * @param { Response } res
+ * @param { Function } next
+ */
+    editScenario: async (req, res, next) => {
+        try {
+            const scenarioId = req.params.scenarioId;
+            const newScenarioContent = req.body;
+            const scenario = await scenarioService.findById(scenarioId)
+
+            if (!scenario) {
+                return next(errorUtils.notFound('Ce scénario n\'existe pas'))
+            }
+            const editedScenario = await scenarioService.edit(scenarioId, newScenarioContent, adminId);
+            res.status(200).json(editedScenario);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+,
+
     /**
      * Liste les thèmes en attente de validation. 
      */
@@ -144,7 +171,7 @@ const adminController = {
             const themeId = req.params.themeId;
             const newThemeStatus = req.body;
             const adminId = req.user._id;
-         
+
 
             const theme = await themeService.findById(themeId);
             if (!theme) {
@@ -185,7 +212,7 @@ const adminController = {
 * @param { Response } res
 * @param { Function } next
 */
-    updateRole: async(req, res, next) => {
+    updateRole: async (req, res, next) => {
         try {
             const userId = req.params.userId;
             const newInfos = req.body;
