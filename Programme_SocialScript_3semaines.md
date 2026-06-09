@@ -287,7 +287,7 @@ Séparation des préoccupations (separation of concerns).
 
 **À faire**
 - [x] Installer yup
-- [x] Créer un middleware `scenario-validation.js` qui prend un schéma Yup et valide `req.body`
+- [x] Créer un middleware `body-validation.js` qui prend un schéma Yup et valide `req.body`
 - [x] Créer un schéma Yup pour la création d'un scénario (titre obligatoire, context obligatoire, choices : tableau de exactement 3 éléments, etc.)
 - [x] Appliquer ce middleware sur `POST /scenarios`
 - [x] Tester les cas d'erreur sur Insomnia : body vide, champs manquants, 2 choices au lieu de 3, etc.
@@ -408,6 +408,16 @@ Pour créer un espace spécial pour les admins, qui ne sera pas accesssibles aux
 - [ ] Gros commit final, push, tu respires.
 
 **Validation finale** : tu peux faire tourner ton API, ouvrir Insomnia, et tester chaque fonctionnalité de Social Script sans bug. Tu es prête à brancher ton front.
+
+
+### Jour 16 — Feature "Choix d'avatar"
+
+ - [x] Ajouter trim: true au champ characterAvatarSeed du modèle
+ - [x] Ajouter updateById au user.service.js
+ - [x] Ajouter updateMe au user.controller.js
+ - [x] Créer validators/user.validator.js avec updateMeSchema
+ - [x] Ajouter .patch(requireAuth, bodyValidation(updateMeSchema), updateMe) sur la route /me
+ - [x] Tester les 4 cas dans Insomnia
 
 ---
 

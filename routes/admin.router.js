@@ -5,9 +5,9 @@ const resourceController = require('../controllers/resource.controller');
 // Après
 const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const requireRole = require('../middlewares/auth/role.middleware');
-const scenarioValidation = require('../middlewares/scenario-validation');
+const bodyValidation = require('../middlewares/body-validation');
 const { scenarioValidator } = require('../validators/scenario.validator');
-scenarioValidation
+bodyValidation
 // admin.router.js
 const adminRouter = require('express').Router();
 
@@ -29,7 +29,7 @@ adminRouter.route('/scenarios/:scenarioId/status')
 .patch(adminController.updateScenarioStatus)
 
 adminRouter.route('/scenarios/:scenarioId')
-.patch(requireRole('admin'), scenarioValidation(scenarioValidator), adminController.editScenario)
+.patch(requireRole('admin'), bodyValidation(scenarioValidator), adminController.editScenario)
 .delete(requireRole('admin'), adminController.deleteScenario)
 
 adminRouter.route('/themes')

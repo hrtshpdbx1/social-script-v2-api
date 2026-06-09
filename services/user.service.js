@@ -28,16 +28,31 @@ const userService = {
     }
 },
 
+// Update par un admin 
     update: async (userId, newInfos, adminId) => {
         try {
             const updatedUser = await User.findByIdAndUpdate(
                 userId,
                 {
                     ...newInfos,
-                    reviewedBy: adminId,
+                    reviewedBy: adminId, // pour audit
                     reviewedAt: new Date()
                 },
                 { returnDocument: 'after' }
+            );
+            return updatedUser;
+        } catch (err) {
+            throw err;
+        }
+    }, 
+
+    // Update par l'utilisateur sur son propre profil 
+    updateSelf: async (userId, newInfos) => {
+        try {
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
+                newInfos,
+                { returnDocument: 'after', runValidators: true }
             );
             return updatedUser;
         } catch (err) {

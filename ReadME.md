@@ -123,7 +123,7 @@ server/
 │   │   ├── auth.middleware.js         # Verifies and decodes the JWT → populates req.user
 │   │   ├── role.middleware.js         # Checks req.user.role against allowed roles
 │   │   └── userAuthorization.middleware.js  # Checks ownership (user = resource owner)
-│   └── scenario-validation.js        # Applies a Yup schema to req.body
+│   └── body-validation.js        # Applies a Yup schema to req.body
 │
 ├── validators/
 │   └── scenario.validator.js         # Yup schema for scenario creation

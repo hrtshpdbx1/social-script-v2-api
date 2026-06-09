@@ -19,8 +19,32 @@ const userController = {
         } catch (err) {
             return next(err);
         }
+    },
+
+    // PATCH /users/me 
+    // Permet à l'utilisateur connecté de mettre à jour son propre profil
+    // ? Pour l'instant : uniquement characterAvatarSeed
+    updateMe: async (req, res, next) => {
+        try {
+            const userId = req.user._id;
+
+            // whitelist explicitement les champs modifiables.
+            const { characterAvatarSeed } = req.body;
+            const updatedUser = await userService.updateSelf(userId, {
+                characterAvatarSeed
+            });
+
+            if (!updatedUser) {
+                return next(errorUtils.notFound());
+            }
+
+            return res.status(200).json({ user: updatedUser });
+        } catch (err) {
+            return next(err);
+        }
     }
 };
+
 
 module.exports = userController;
 

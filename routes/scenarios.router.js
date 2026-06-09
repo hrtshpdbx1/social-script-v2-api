@@ -4,7 +4,7 @@ const scenarioController = require('../controllers/scenario.controller');
 // Après
 const { requireAuth } = require('../middlewares/auth/auth.middleware');
 const { scenarioValidator } = require('../validators/scenario.validator');
-const scenarioValidation = require('../middlewares/scenario-validation');
+const bodyValidation = require('../middlewares/body-validation');
 const reportController = require('../controllers/report.controller');
 
 scenarioRouter.route('/users/:id/scenarios')
@@ -15,7 +15,7 @@ scenarioRouter.route('/:scenarioId/report')
 
 scenarioRouter.route('/')
 .get(scenarioController.getAll)
-.post(requireAuth,scenarioValidation(scenarioValidator), scenarioController.insert)
+.post(requireAuth,bodyValidation(scenarioValidator), scenarioController.insert)
 
 scenarioRouter.route('/:id')
 .get(scenarioController.getById)  

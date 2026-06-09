@@ -2,37 +2,41 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
     {
-        firstName : {
-            type : String,
-            required : true,
-            trim : true
+        firstName: {
+            type: String,
+            required: true,
+            trim: true
         },
-        lastName : {
-            type : String,
-            required : true,
-            trim : true
+        lastName: {
+            type: String,
+            required: true,
+            trim: true
         },
-        email : {
-            type : String,
-            required : true,
-            trim : true,
-            unique : true
+        email: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true
         },
-        password : {
-            type : String,
+        password: {
+            type: String,
             select: false
         },
-        role : {
-            type : String,
-            enum : ['user', 'moderator','admin'], 
+        role: {
+            type: String,
+            enum: ['user', 'moderator', 'admin'],
             /* enum permet de donner une liste de chaines autorisées, si on encode autre chose -> erreur */
-            default : 'user' 
+            default: 'user'
             /* default permet de mettre une valeur par défaut, si on ne renseigne pas de role, ce sera User qui sera inséré */
+        }, 
+        characterAvatarSeed: {
+            type: String,
+            trim: true
         }
-    }, 
+    },
     {
-    
-        timestamps : true
+
+        timestamps: true
     });
 
 const User = model('User', userSchema);

@@ -1,6 +1,6 @@
-// scenario-validation.js
+// body-validation.js
 
-const scenarioValidation = (yupValidator) => {
+const bodyValidation = (yupValidator) => {
     return async(req, res, next) => {
 
     //On essaie de passer la validation
@@ -24,4 +24,4 @@ const scenarioValidation = (yupValidator) => {
 
 }
 
-module.exports = scenarioValidation; 
+module.exports = bodyValidation; 
