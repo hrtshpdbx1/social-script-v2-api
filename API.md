@@ -2,7 +2,7 @@
 
 This documentation lists all available routes (endpoints) on the SocialScript API, along with their authorization levels and expected/returned data payloads.
 
-> 🔄 Doc synchronisée avec les routers (source de vérité). Ajouts récents : `GET /api/users/me`, `GET /api/resources`, `POST /api/resource-categories`.
+> 🔄 Doc synchronisée avec les routers (source de vérité). Ajouts récents : `GET /api/users/me`, `PATCH /api/users/me`, `GET /api/resources`, `POST /api/resource-categories`.
 
 ---
 
@@ -64,9 +64,48 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 - **Description:** Retrieves the profile of the currently logged-in user. Route effectivement utilisée par le frontend (`userService.getMe`).
 - **Protection:** Logged-in user (`requireAuth`)
 - **Success Response (200 OK):**
-  ```json
-  { "id": "12345", "username": "Nickname", "email": "test@test.com", "role": "user" }
-  ```
+```json
+  {
+    "user": {
+      "_id": "...",
+      "firstName": "...",
+      "lastName": "...",
+      "email": "...",
+      "role": "user",
+      "characterAvatarSeed": "Felix42",
+      "createdAt": "...",
+      "updatedAt": "..."
+    }
+  }
+```
+
+---
+
+### `PATCH /api/users/me`
+
+- **Description:** Met à jour le profil de l'utilisateur connecté. Seuls les champs whitelistés dans le controller sont modifiables (actuellement : `characterAvatarSeed`).
+- **Protection:** Logged-in user (`requireAuth`) + Yup Validation
+- **Expected Body:**
+```json
+  { "characterAvatarSeed": "Felix42" }
+```
+- **Success Response (200 OK):**
+```json
+  {
+    "user": {
+      "_id": "...",
+      "firstName": "...",
+      "characterAvatarSeed": "Felix42",
+      "...": "..."
+    }
+  }
+```
+- **Erreurs notables :**
+  - `400 Bad Request` si le seed est vide ou >50 caractères (Yup)
+  - `401 Unauthorized` si le token est manquant ou invalide
+  - `404 Not Found` si l'utilisateur du token n'existe plus en BDD
+
+> 🔒 **Sécurité :** le controller whiteliste explicitement les champs autorisés. Un body type `{ "role": "admin" }` est silencieusement ignoré.
 
 ---
 
