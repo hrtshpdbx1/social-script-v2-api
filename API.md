@@ -311,6 +311,20 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 ---
 
+### `PATCH /api/admin/scenarios/:scenarioId`
+
+- **Description:** Edits the content of an existing scenario (title, context, choices, etc.).
+- **Protection:** ⚠️ Admin Only (`requireRole('admin')`) + Yup Validation
+- **Expected Body:**
+```json
+  { "title": "...", "context": "...", "choices": [ ... ] }
+```
+- **Success Response (200 OK):** Returns the updated scenario object.
+- **Error Responses:**
+  - `404 Not Found` if the scenario doesn't exist
+
+---
+
 ### `DELETE /api/admin/scenarios/:scenarioId`
 
 - **Description:** Logically deletes (soft-deletes) a scenario.
@@ -323,6 +337,17 @@ This documentation lists all available routes (endpoints) on the SocialScript AP
 
 - **Description:** Lists themes awaiting validation.
 - **Protection:** Moderator or Admin
+
+---
+
+### `GET /api/admin/resources`
+
+- **Description:** Lists all resources, including unpublished ones (`isPublished: false`). Admin/moderator view.
+- **Protection:** Moderator or Admin
+- **Success Response (200 OK):**
+```json
+  { "resources": [ { "_id": "...", "title": "...", "isPublished": false, "..." : "..." } ] }
+```
 
 ---
 
